@@ -6,21 +6,21 @@
             'grid-template-columns': 'repeat(' + size.number + ', 1fr)'
             }">
         <div
-            class="field"
+            class="field-row"
             :style="{
                 'width': fieldSize,
                 'height': fieldSize
                 }"
             v-for="row in size.number">
-
+            <div :style="{'height': fieldSize}"></div>
             <div
-                class="field"
+                class="field-column"
                 :style="{
                     'width': fieldSize,
-                    'height': fieldSize
+                    'height': fieldSize,
                     }"
-                v-for="column in size.number"></div>
-
+                v-for="column in size.number-1">
+            </div>
         </div>
     </div>
 </template>
@@ -56,7 +56,12 @@
     row-gap: 0;
   }
 
-  .field {
+  .field-row {
+    border: solid 1px #4d72cd;
+  }
+  .field-column {
+    /* firt row is moved by 1px top-right */
+    transform: translate(-1px, -1px);
     border: solid 1px #4d72cd;
   }
 </style>
