@@ -2,7 +2,9 @@
   <div class="main">
     <h1 class="main-title">Tic Tac Toe</h1>
 
-    <Selection class="selection-position"/>
+    <Selection
+      class="selection-position"
+      />
 
     <h2 class="title">Player X's run</h2>
     <div class="playground">
@@ -16,24 +18,25 @@
   import Playground from './components/Playground.vue'
   import Selection from './components/Selection.vue'
 
+
 </script>
 
 <style scoped>
 .main {
-    background-color: #302321 ;
+    background-image: url('../src/images/Hippopx.jpg');
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     height: 100vh;
   }
 
   .main-title {
-    color: #dcd3d1;
+    color:  #1d1b20 ;
     margin-top: 20px;
   }
 
   .title {
-    color: #dcd3d1 ;
+    color:  #1d1b20  ;
     margin-top: 50px;
   }
 
