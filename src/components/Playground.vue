@@ -11,15 +11,17 @@
                 'width': fieldSize,
                 'height': fieldSize
                 }"
-            v-for="row in size.number">
-            <div :style="{'height': fieldSize}"></div>
+            v-for="row in size.number"
+            >
             <div
                 class="field-column"
                 :style="{
                     'width': fieldSize,
-                    'height': fieldSize,
+                    'height': fieldSize
                     }"
-                v-for="column in size.number-1">
+                v-for="column in size.number"
+                @click=""
+                >
             </div>
         </div>
     </div>
@@ -44,19 +46,24 @@
 
 </script>
 
-<style>
-  .playground {
-    display: grid;
-    column-gap: 0;
-    row-gap: 0;
-  }
+<style scoped>
+    .playground {
+        display: grid;
+        column-gap: 0;
+        row-gap: 0;
+    }
 
-  .field-row {
-    border: solid 1px #4d72cd;
-  }
-  .field-column {
-    /* firt row is moved by 1px top-right */
-    transform: translate(-1px, -1px);
-    border: solid 1px #4d72cd;
-  }
+    .field-row {
+        border: solid 1px #4d72cd;
+    }
+
+    .field-column {
+        /* firt row is moved by 1px top-right */
+        transform: translate(-1px, -1px);
+        border: solid 1px #4d72cd;
+    }
+
+    .field-column:hover {
+        background-color: rgba(77, 114, 205, 0.5);
+    }
 </style>

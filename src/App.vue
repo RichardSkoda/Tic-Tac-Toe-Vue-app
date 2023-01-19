@@ -2,7 +2,7 @@
   <div class="main">
     <h1 class="main-title">Tic Tac Toe</h1>
 
-    <Selection
+    <Settings
       class="selection-position"
       />
 
@@ -16,7 +16,7 @@
 <script setup lang="ts">
   import {ref, watch} from 'vue'
   import Playground from './components/Playground.vue'
-  import Selection from './components/Selection.vue'
+  import Settings from './components/Settings.vue'
 
 </script>
 
