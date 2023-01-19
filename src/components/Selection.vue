@@ -2,11 +2,16 @@
     <div>
         <div>
             <p>Player 1 name</p>
-            <input type="text">
+            <input
+            type="text"
+            v-model="playerOne"
+            >
         </div>
         <div>
             <p>Player 2 name</p>
-            <input type="text">
+            <input type="text"
+            v-model="playerTwo"
+            >
         </div>
         <div>
             <p>Fields number</p>
@@ -24,6 +29,12 @@
                 <option value="5">5</option>
             </select>
         </div>
+        <div class="player-one-round-container">
+            <h2>{{ playerOne }}'s turn</h2>
+        </div>
+        <div class="player-two-round-container">
+            <h2>{{ playerTwo }}'s turn</h2>
+        </div>
     </div>
 </template>
 
@@ -32,6 +43,8 @@
     import {size} from '../service/createPlayground'
 
     const playgroundSizeString = ref<string>('0')
+    const playerOne = ref<string>('O')
+    const playerTwo = ref<string>('X')
 
     watch(playgroundSizeString, ()=> {
         const playgroundSizeNumber = +playgroundSizeString.value
@@ -44,12 +57,30 @@
         }
     })
 
-
 </script>
 
 <style>
 p, label {
     color: #1d1b20 1;
 }
+
+input, select {
+    border: none;
+    outline: none;
+}
+
+.player-one-round-container, .player-two-round-container {
+    position: fixed;
+    top: 50%;
+    right: 1%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    color:  #1d1b20;
+  }
+
+  .player-one-round-container {
+    left: 1%;
+  }
 
 </style>

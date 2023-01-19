@@ -6,7 +6,7 @@
       class="selection-position"
       />
 
-    <h2 class="title">Player X's run</h2>
+
     <div class="playground">
       <Playground/>
     </div>
@@ -18,26 +18,20 @@
   import Playground from './components/Playground.vue'
   import Selection from './components/Selection.vue'
 
-
 </script>
 
 <style scoped>
 .main {
     background-image: url('../src/images/Hippopx.jpg');
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     height: 100vh;
   }
 
   .main-title {
+    position: absolute;
+    top: 5%;
+    right: 5%;
     color:  #1d1b20 ;
-    margin-top: 20px;
-  }
-
-  .title {
-    color:  #1d1b20  ;
-    margin-top: 50px;
   }
 
   .selection-position {

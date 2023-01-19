@@ -31,9 +31,6 @@
 
     const fieldSize = ref<string>('75px')
 
-    console.log(size.number)
-    console.log(fieldSize.value)
-
     watch(() => size.number, () => {
         if(size.number <= 3 && size.number <= 10) {
             fieldSize.value = '75px'
@@ -44,8 +41,6 @@
         }
 
     })
-
-
 
 </script>
 
