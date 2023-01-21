@@ -24,6 +24,7 @@
 .main {
     background-image: url('../src/images/Hippopx.jpg');
     display: flex;
+    align-items: center;
     height: 100vh;
   }
 
@@ -41,7 +42,7 @@
   }
 
   .playground {
-    position:fixed;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

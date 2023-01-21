@@ -18,7 +18,6 @@
             <input
                 type="text"
                 v-model="playgroundSizeString"
-
                 >
         </div>
         <div>
@@ -42,7 +41,7 @@
     import {ref, watch} from 'vue'
     import {size} from '../service/createPlayground'
 
-    const playgroundSizeString = ref<string>('0')
+    const playgroundSizeString = ref<string>('3')
     const playerOne = ref<string>('O')
     const playerTwo = ref<string>('X')
 
