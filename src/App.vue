@@ -4,11 +4,20 @@
 
     <Settings
       class="selection-position"
+      @change-name-one="changeNameOne"
+      @change-name-two="changeNameTwo"
       />
 
 
     <div class="playground">
       <Playground/>
+    </div>
+
+    <div class="player-one-round-container">
+        <h2>{{ playerOneName }}'s turn</h2>
+    </div>
+    <div class="player-two-round-container">
+        <h2>{{ playerTwoName }}'s turn</h2>
     </div>
   </div>
 </template>
@@ -17,6 +26,18 @@
   import {ref, watch} from 'vue'
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
+
+  const playerOneName = ref<string>('O')
+  const playerTwoName = ref<string>('X')
+
+  const changeNameOne = (playerOneNameRecieved: string) => {
+    playerOneName.value = playerOneNameRecieved
+  }
+
+  const changeNameTwo = (playerTwoNameRecieved: string) => {
+    playerTwoName.value = playerTwoNameRecieved
+  }
+
 
 </script>
 
@@ -46,5 +67,19 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  .player-one-round-container, .player-two-round-container {
+    position: fixed;
+    top: 50%;
+    right: 1%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    color:  #1d1b20;
+  }
+
+  .player-one-round-container {
+    left: 1%;
   }
 </style>

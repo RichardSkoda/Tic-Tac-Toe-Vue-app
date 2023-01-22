@@ -3,14 +3,17 @@
         <div>
             <p>Player 1 name</p>
             <input
-            type="text"
-            v-model="playerOne"
+                type="text"
+                v-model="playerOneName"
+                @change="changeNameOne(playerOneName)"
             >
         </div>
         <div>
             <p>Player 2 name</p>
-            <input type="text"
-            v-model="playerTwo"
+            <input
+                type="text"
+                v-model="playerTwoName"
+                @change="changeNameTwo(playerTwoName)"
             >
         </div>
         <div>
@@ -28,12 +31,6 @@
                 <option value="5">5</option>
             </select>
         </div>
-        <div class="player-one-round-container">
-            <h2>{{ playerOne }}'s turn</h2>
-        </div>
-        <div class="player-two-round-container">
-            <h2>{{ playerTwo }}'s turn</h2>
-        </div>
     </div>
 </template>
 
@@ -42,8 +39,22 @@
     import {size} from '../service/createPlayground'
 
     const playgroundSizeString = ref<string>('3')
-    const playerOne = ref<string>('O')
-    const playerTwo = ref<string>('X')
+    const playerOneName = ref<string>('O')
+    const playerTwoName = ref<string>('X')
+
+    const emits = defineEmits<{
+        (e: 'change-name-one', playerOneName: string): void
+        (e: 'change-name-two', playerTwoName: string): void
+    }>()
+
+    const changeNameOne = (playerTwoName: string) => {
+        emits('change-name-one', playerTwoName)
+    }
+
+    const changeNameTwo = (playerTwoName: string) => {
+        emits('change-name-two', playerTwoName)
+    }
+    
 
     watch(playgroundSizeString, ()=> {
         const playgroundSizeNumber = +playgroundSizeString.value
@@ -67,19 +78,4 @@ input, select {
     border: none;
     outline: none;
 }
-
-.player-one-round-container, .player-two-round-container {
-    position: fixed;
-    top: 50%;
-    right: 1%;
-    width: 20%;
-    display: flex;
-    justify-content: center;
-    color:  #1d1b20;
-  }
-
-  .player-one-round-container {
-    left: 1%;
-  }
-
 </style>
