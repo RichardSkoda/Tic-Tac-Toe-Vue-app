@@ -39,8 +39,8 @@
     import {size} from '../service/createPlayground'
 
     const playgroundSizeString = ref<string>('3')
-    const playerOneName = ref<string>('O')
-    const playerTwoName = ref<string>('X')
+    const playerOneName = ref<string>('X')
+    const playerTwoName = ref<string>('O')
 
     const emits = defineEmits<{
         (e: 'change-name-one', playerOneName: string): void

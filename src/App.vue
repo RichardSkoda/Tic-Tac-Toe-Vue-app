@@ -4,22 +4,28 @@
 
     <Settings
       class="selection-position"
+      :name-one="playerOneName"
+      :name-two="playerTwoName"
       @change-name-one="changeNameOne"
       @change-name-two="changeNameTwo"
       />
 
 
     <div class="playground">
-      <Playground/>
+      <Playground
+        :rounds="roundsPlayed"
+        @runs-increment="runsIncrement"  
+      />
     </div>
 
     <div class="player-one-round-container">
-        <h2>{{ playerOneName }}'s turn</h2>
+        <h2 v-show="roundsPlayed == 0 || roundsPlayed % 2 == 0 ">{{ playerOneName }}'s turn</h2>
     </div>
     <div class="player-two-round-container">
-        <h2>{{ playerTwoName }}'s turn</h2>
+        <h2 v-show="roundsPlayed % 2 != 0">{{ playerTwoName }}'s turn</h2>
     </div>
   </div>
+  
 </template>
 
 <script setup lang="ts">
@@ -27,8 +33,9 @@
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
 
-  const playerOneName = ref<string>('O')
-  const playerTwoName = ref<string>('X')
+  const playerOneName = ref<string>('X')
+  const playerTwoName = ref<string>('O')
+  const roundsPlayed = ref<number>(0)
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved
@@ -38,6 +45,11 @@
     playerTwoName.value = playerTwoNameRecieved
   }
 
+  const runsIncrement = () => {
+    roundsPlayed.value += 1
+  }
+
+  
 
 </script>
 
