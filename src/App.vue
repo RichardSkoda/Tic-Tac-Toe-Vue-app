@@ -14,7 +14,8 @@
     <div class="playground">
       <Playground
         :rounds="roundsPlayed"
-        @runs-increment="runsIncrement"  
+        @runs-increment="runsIncrement" 
+        @playground-coordinate-symbol="runsIncrement"
       />
     </div>
 
@@ -36,6 +37,7 @@
   const playerOneName = ref<string>('X')
   const playerTwoName = ref<string>('O')
   const roundsPlayed = ref<number>(0)
+  const symbol = ref<string>('')
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved
@@ -45,11 +47,10 @@
     playerTwoName.value = playerTwoNameRecieved
   }
 
-  const runsIncrement = () => {
-    roundsPlayed.value += 1
+  const runsIncrement = (symbol: string) => {
+    if(symbol === 'X' || symbol === 'O')
+      roundsPlayed.value += 1
   }
-
-  
 
 </script>
 

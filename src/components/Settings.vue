@@ -29,6 +29,7 @@
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
+                <option value="6">6</option>
             </select>
         </div>
     </div>
@@ -55,7 +56,6 @@
         emits('change-name-two', playerTwoName)
     }
     
-
     watch(playgroundSizeString, ()=> {
         const playgroundSizeNumber = +playgroundSizeString.value
         if(playgroundSizeNumber > 38) {
