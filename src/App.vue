@@ -14,8 +14,7 @@
     <div class="playground">
       <Playground
         :rounds="roundsPlayed"
-        @runs-increment="runsIncrement" 
-        @playground-coordinate-symbol="runsIncrement"
+        @runs-increment="runsIncrement"
       />
     </div>
 
@@ -37,7 +36,6 @@
   const playerOneName = ref<string>('X')
   const playerTwoName = ref<string>('O')
   const roundsPlayed = ref<number>(0)
-  const symbol = ref<string>('')
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved

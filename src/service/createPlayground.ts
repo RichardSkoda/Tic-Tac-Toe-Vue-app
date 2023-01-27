@@ -1,11 +1,12 @@
-import {reactive} from 'vue'
-
-let playground: string[][] = []
+import {createApp, reactive} from 'vue'
 
 export const size = reactive({number: 3})
 
+// try to set playground reactive and then use it in each component and App.vue. Remove ref playground from Playground.vue and replace it by reactive playground 
+export const playground = reactive({playgroundArray: [['', '', ''], ['', '', ''], ['', '', '']]})
+
 export const createPlayground = function(lineAndRow: number) {
-    playground = []
+    const playground: string[][] = []
     for(let i = 0; i < lineAndRow; i++) {
         const line: string[] = []
         for(let i = 0; i < lineAndRow; i++) {

@@ -30,12 +30,13 @@
 
 <script setup lang="ts">
     import {ref, watch, reactive} from 'vue'
-    import {size} from '../service/createPlayground'
-    import {createPlayground} from '../service/createPlayground'
+    import {size, createPlayground} from '../service/createPlayground'
+    import {makeColumns} from '../service/winner'
 
     const cellSize = ref<string>('75px')
     const symbolSize = ref<string>('300%')
-    const playground =ref<Array<string[]>>([['', '', ''], ['', '', ''], ['', '', '']])
+    const playground = ref<Array<string[]>>([['', '', ''], ['', '', ''], ['', '', '']])
+    const playgroundColumns = ref<Array<string[]>>([[]])
 
     interface Props {
         rounds: number
@@ -59,10 +60,14 @@
         if((props.rounds === 0 || props.rounds % 2 === 0 && playground.value[x][y] === '')) {
             playground.value[x][y] = 'X'
             emits('runs-increment', playground.value[x][y])
+            playgroundColumns.value = makeColumns(playground.value ,size.number)
+            console.log(playgroundColumns)
             return playground.value[x][y]
         } else if((props.rounds % 2 != 0 && playground.value[x][y] === '')) {
             playground.value[x][y] = 'O'
             emits('runs-increment', playground.value[x][y])
+            playgroundColumns.value = makeColumns(playground.value ,size.number)
+            console.log(playgroundColumns)
             return playground.value[x][y]
         }
     }
