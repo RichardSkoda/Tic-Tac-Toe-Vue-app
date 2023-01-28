@@ -31,7 +31,7 @@
 <script setup lang="ts">
     import {ref, watch, reactive} from 'vue'
     import {size, createPlayground} from '../service/createPlayground'
-    import {makeColumns} from '../service/winner'
+    import {makeDiagonalsFromTop, makeDiagonalsFromBottom, makeColumns} from '../service/winner'
 
     const cellSize = ref<string>('75px')
     const symbolSize = ref<string>('300%')
@@ -60,13 +60,13 @@
         if((props.rounds === 0 || props.rounds % 2 === 0 && playground.value[x][y] === '')) {
             playground.value[x][y] = 'X'
             emits('runs-increment', playground.value[x][y])
-            playgroundColumns.value = makeColumns(playground.value ,size.number)
+            playgroundColumns.value = makeDiagonalsFromBottom(playground.value ,size.number)
             console.log(playgroundColumns)
             return playground.value[x][y]
         } else if((props.rounds % 2 != 0 && playground.value[x][y] === '')) {
             playground.value[x][y] = 'O'
             emits('runs-increment', playground.value[x][y])
-            playgroundColumns.value = makeColumns(playground.value ,size.number)
+            playgroundColumns.value = makeDiagonalsFromBottom(playground.value ,size.number)
             console.log(playgroundColumns)
             return playground.value[x][y]
         }

@@ -1,5 +1,45 @@
-export const makeDiagonals = function(twoDimensArray: Array<string[]>, line: number) {
+export const makeDiagonalsFromTop = function(twoDimensArray: Array<string[]>, line: number) {
+    const columns: Array<string[]> = []
+    let x = 0
+    let y = 0
+    let tempArray: string[] = []
 
+    for(let i=0; i <= 2*(line - 1); i++) {
+        console.log(i)
+        for(tempArray = [], x = line - 1; (y = i - x), x >= 0; x--) {
+            console.log(y, x, twoDimensArray)
+            if(y >= 0 && y < line) {
+                tempArray.push(twoDimensArray[y][x])
+                console.log(tempArray)
+            }
+        }
+        if(tempArray.length > 0) {
+            columns.push(tempArray)
+        }
+    }
+    return columns
+}
+
+export const makeDiagonalsFromBottom = function(twoDimensArray: Array<string[]>, line: number) {
+    const columns: Array<string[]> = []
+    let x = 0
+    let y = 0
+    let tempArray: string[] = []
+
+    for(let i=0; i <= 2*(line - 1); i++) {
+        console.log(i)
+        for(tempArray = [], x = 0; (y = x + (i - (line - 1))), x <= line - 1; x++) {
+            console.log(y, x, twoDimensArray)
+            if(y >= 0 && y < line) {
+                tempArray.push(twoDimensArray[y][x])
+                console.log(tempArray)
+            }
+        }
+        if(tempArray.length > 0) {
+            columns.push(tempArray)
+        }
+    }
+    return columns
 }
 
 export const makeColumns = function(twoDimensArray: Array<string[]>, line: number) {
