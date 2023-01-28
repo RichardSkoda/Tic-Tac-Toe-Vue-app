@@ -32,10 +32,13 @@
   import {ref, watch} from 'vue'
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
+  import {makeDiagonalsFromTop, makeDiagonalsFromBottom, makeColumns} from '../src/service/winner'
+  import {size, playground} from '../src/service/createPlayground'
 
   const playerOneName = ref<string>('X')
   const playerTwoName = ref<string>('O')
   const roundsPlayed = ref<number>(0)
+  const playgroundColumns = ref<Array<string[]>>([[]])
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved
@@ -49,6 +52,11 @@
     if(symbol === 'X' || symbol === 'O')
       roundsPlayed.value += 1
   }
+
+  watch(() => roundsPlayed.value, () => {
+    playgroundColumns.value = makeDiagonalsFromBottom(playground.playgroundArray ,size.number)
+    console.log(playgroundColumns)
+  })
 
 </script>
 

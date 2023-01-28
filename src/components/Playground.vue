@@ -4,7 +4,7 @@
         >
         <div
             class="field-row"
-            v-for="(row, x) in playground"
+            v-for="(row, x) in playground.playgroundArray"
             :key="x"
             >
             <div
@@ -30,13 +30,12 @@
 
 <script setup lang="ts">
     import {ref, watch, reactive} from 'vue'
-    import {size, createPlayground} from '../service/createPlayground'
-    import {makeDiagonalsFromTop, makeDiagonalsFromBottom, makeColumns} from '../service/winner'
+    import {size, playground, createPlayground} from '../service/createPlayground'
 
     const cellSize = ref<string>('75px')
     const symbolSize = ref<string>('300%')
-    const playground = ref<Array<string[]>>([['', '', ''], ['', '', ''], ['', '', '']])
-    const playgroundColumns = ref<Array<string[]>>([[]])
+    // const playground = ref<Array<string[]>>([['', '', ''], ['', '', ''], ['', '', '']])
+    
 
     interface Props {
         rounds: number
@@ -52,23 +51,19 @@
     }>()
 
     const playerMove = (x: number, y: number) => {
-        if(playground.value[x][y] != '') {
+        if(playground.playgroundArray[x][y] != '') {
             emits('runs-increment', '')
             return
         }
 
-        if((props.rounds === 0 || props.rounds % 2 === 0 && playground.value[x][y] === '')) {
-            playground.value[x][y] = 'X'
-            emits('runs-increment', playground.value[x][y])
-            playgroundColumns.value = makeDiagonalsFromBottom(playground.value ,size.number)
-            console.log(playgroundColumns)
-            return playground.value[x][y]
-        } else if((props.rounds % 2 != 0 && playground.value[x][y] === '')) {
-            playground.value[x][y] = 'O'
-            emits('runs-increment', playground.value[x][y])
-            playgroundColumns.value = makeDiagonalsFromBottom(playground.value ,size.number)
-            console.log(playgroundColumns)
-            return playground.value[x][y]
+        if((props.rounds === 0 || props.rounds % 2 === 0 && playground.playgroundArray[x][y] === '')) {
+            playground.playgroundArray[x][y] = 'X'
+            emits('runs-increment', playground.playgroundArray[x][y])
+            return playground.playgroundArray[x][y]
+        } else if((props.rounds % 2 != 0 && playground.playgroundArray[x][y] === '')) {
+            playground.playgroundArray[x][y] = 'O'
+            emits('runs-increment', playground.playgroundArray[x][y])
+            return playground.playgroundArray[x][y]
         }
     }
 
@@ -83,7 +78,7 @@
             cellSize.value = '20px'
             symbolSize.value = '90%'
         }
-        playground.value = createPlayground(size.number)
+        playground.playgroundArray = createPlayground(size.number)
     })
 
 </script>
