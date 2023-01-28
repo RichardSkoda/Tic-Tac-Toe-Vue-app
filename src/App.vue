@@ -32,13 +32,16 @@
   import {ref, watch} from 'vue'
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
-  import {makeDiagonalsFromTop, makeDiagonalsFromBottom, makeColumns} from '../src/service/winner'
-  import {size, playground} from '../src/service/createPlayground'
+  import {makeDiagonalsFromTopRight, makeDiagonalsFromTopLeft, makeColumns, checkWinner} from '../src/service/winner'
+  import {size, rowToWin, playground} from '../src/service/createPlayground'
 
   const playerOneName = ref<string>('X')
   const playerTwoName = ref<string>('O')
   const roundsPlayed = ref<number>(0)
   const playgroundColumns = ref<Array<string[]>>([[]])
+  const playgroundDiagonalsFromTopRight = ref<Array<Array<string>>>([[]])
+  const playgroundDiagonalsFromTopLeft = ref<Array<Array<string>>>([[]])
+  const playgroundAllArray = ref<Array<Array<string>>>([[]])
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved
@@ -54,8 +57,14 @@
   }
 
   watch(() => roundsPlayed.value, () => {
-    playgroundColumns.value = makeDiagonalsFromBottom(playground.playgroundArray ,size.number)
-    console.log(playgroundColumns)
+    playgroundColumns.value = makeColumns(playground.playgroundArray ,size.number)
+    playgroundDiagonalsFromTopRight.value = makeDiagonalsFromTopRight(playground.playgroundArray, size.number)
+    playgroundDiagonalsFromTopLeft.value = makeDiagonalsFromTopLeft(playground.playgroundArray, size.number)
+
+    playgroundAllArray.value = playgroundColumns.value.concat(playgroundDiagonalsFromTopRight.value, playgroundDiagonalsFromTopLeft.value)
+
+    checkWinner(playgroundAllArray.value, rowToWin.number)
+
   })
 
 </script>

@@ -2,6 +2,8 @@ import {createApp, reactive} from 'vue'
 
 export const size = reactive({number: 3})
 
+export const rowToWin = reactive({number: 3})
+
 // try to set playground reactive and then use it in each component and App.vue. Remove ref playground from Playground.vue and replace it by reactive playground 
 export const playground = reactive({playgroundArray: [['', '', ''], ['', '', ''], ['', '', '']]})
 

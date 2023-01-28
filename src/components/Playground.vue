@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-    import {ref, watch, reactive} from 'vue'
+    import {ref, watch} from 'vue'
     import {size, playground, createPlayground} from '../service/createPlayground'
 
     const cellSize = ref<string>('75px')

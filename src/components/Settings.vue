@@ -25,7 +25,11 @@
         </div>
         <div>
             <label for="rowToWin">Row to win:</label>
-            <select name="rowToWin" id="">
+            <select
+                name="rowToWin" 
+                id=""
+                v-model="rowToWin.number"
+                >
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
@@ -37,7 +41,7 @@
 
 <script setup lang="ts">
     import {ref, watch} from 'vue'
-    import {size} from '../service/createPlayground'
+    import {size, rowToWin} from '../service/createPlayground'
 
     const playgroundSizeString = ref<string>('3')
     const playerOneName = ref<string>('X')
