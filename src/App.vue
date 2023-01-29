@@ -20,9 +20,11 @@
 
     <div class="player-one-round-container">
         <h2 v-show="roundsPlayed == 0 || roundsPlayed % 2 == 0 ">{{ playerOneName }}'s turn</h2>
+        <p v-show="winner.includes('X')">WINNER</p>
     </div>
     <div class="player-two-round-container">
         <h2 v-show="roundsPlayed % 2 != 0">{{ playerTwoName }}'s turn</h2>
+        <p v-show="winner.includes('O')">WINNER</p>
     </div>
   </div>
   
@@ -38,6 +40,9 @@
   const playerOneName = ref<string>('X')
   const playerTwoName = ref<string>('O')
   const roundsPlayed = ref<number>(0)
+  const winnerXRow = ref<string>('XXX')
+  const winnerORow = ref<string>('OOO')
+  const winner = ref<string[]>([])
   const playgroundColumns = ref<Array<string[]>>([[]])
   const playgroundDiagonalsFromTopRight = ref<Array<Array<string>>>([[]])
   const playgroundDiagonalsFromTopLeft = ref<Array<Array<string>>>([[]])
@@ -51,20 +56,38 @@
     playerTwoName.value = playerTwoNameRecieved
   }
 
+  const computeWinnerRowX = (rowToWin: number) => {
+    return 'X'.repeat(rowToWin)
+  }
+
+  const computeWinnerRowO = (rowToWin: number) => {
+    return 'O'.repeat(rowToWin)
+  }
+
   const runsIncrement = (symbol: string) => {
     if(symbol === 'X' || symbol === 'O')
       roundsPlayed.value += 1
   }
+
+  watch(() => rowToWin.number, () => {
+    winnerXRow.value = computeWinnerRowX(rowToWin.number)
+    winnerORow.value = computeWinnerRowO(rowToWin.number)
+  })
 
   watch(() => roundsPlayed.value, () => {
     playgroundColumns.value = makeColumns(playground.playgroundArray ,size.number)
     playgroundDiagonalsFromTopRight.value = makeDiagonalsFromTopRight(playground.playgroundArray, size.number)
     playgroundDiagonalsFromTopLeft.value = makeDiagonalsFromTopLeft(playground.playgroundArray, size.number)
 
-    playgroundAllArray.value = playgroundColumns.value.concat(playgroundDiagonalsFromTopRight.value, playgroundDiagonalsFromTopLeft.value)
+    playgroundAllArray.value = playgroundColumns.value.concat(playgroundDiagonalsFromTopRight.value, playgroundDiagonalsFromTopLeft.value, playground.playgroundArray)
+    winner.value = checkWinner(playgroundAllArray.value, winnerXRow.value, winnerORow.value)
 
-    checkWinner(playgroundAllArray.value, rowToWin.number)
-
+    console.log(winner.value)
+    // dodelat vyhodnoceni viteze- checkWinner funci
+    if(winner.value.length && winner.value.includes('X')) {
+      console.log(winner.value)
+        winner.value = ['X']
+    }
   })
 
 </script>

@@ -1,5 +1,5 @@
-export const makeDiagonalsFromTopRight = function(twoDimensArray: Array<string[]>, line: number) {
-    const columns: Array<string[]> = []
+export const makeDiagonalsFromTopRight = function(twoDimensArray: Array<Array<string>>, line: number) {
+    const columns: Array<Array<string>> = []
     let x = 0
     let y = 0
     let tempArray: string[] = []
@@ -17,8 +17,8 @@ export const makeDiagonalsFromTopRight = function(twoDimensArray: Array<string[]
     return columns
 }
 
-export const makeDiagonalsFromTopLeft = function(twoDimensArray: Array<string[]>, line: number) {
-    const columns: Array<string[]> = []
+export const makeDiagonalsFromTopLeft = function(twoDimensArray: Array<Array<string>>, line: number) {
+    const columns: Array<Array<string>> = []
     let x = 0
     let y = 0
     let tempArray: string[] = []
@@ -36,7 +36,7 @@ export const makeDiagonalsFromTopLeft = function(twoDimensArray: Array<string[]>
     return columns
 }
 
-export const makeColumns = function(twoDimensArray: Array<string[]>, line: number) {
+export const makeColumns = function(twoDimensArray: Array<Array<string>>, line: number) {
     const columns: Array<Array<string>> = [] 
     let column: string[] = []
     for(let i=0; i < line; i++) {
@@ -50,9 +50,18 @@ export const makeColumns = function(twoDimensArray: Array<string[]>, line: numbe
     return columns
 }
 
-export const checkWinner = function(arrays: Array<string[]>, rowToWin: number) {
-    arrays.forEach(function(oneArray) {
-        console.log('NEXT')
-        console.log(oneArray)
+// return non empty array if winner is found
+export const checkWinner = function(arrays: Array<Array<string>>, rowToWinX: string, rowToWinO: string): string[] {
+    const winner: string[] = []
+    arrays.forEach(function(oneArray: string[]): string[] {
+        const mergedArray: string = oneArray.join('')
+        console.log(mergedArray)
+        if(mergedArray.length >= rowToWinX.length && mergedArray.includes(rowToWinX)) {
+            winner.push(rowToWinX)
+        } else if(mergedArray.length >= rowToWinO.length && mergedArray.includes(rowToWinO)) {
+            winner.push(rowToWinO)
+        }
+        return winner
     })
+    return winner
 }

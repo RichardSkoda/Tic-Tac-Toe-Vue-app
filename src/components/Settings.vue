@@ -28,12 +28,12 @@
             <select
                 name="rowToWin" 
                 id=""
-                v-model="rowToWin.number"
+                v-model="rowToWinString"
                 >
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
             </select>
         </div>
     </div>
@@ -44,6 +44,7 @@
     import {size, rowToWin} from '../service/createPlayground'
 
     const playgroundSizeString = ref<string>('3')
+    const rowToWinString = ref<string>('3')
     const playerOneName = ref<string>('X')
     const playerTwoName = ref<string>('O')
 
@@ -69,6 +70,10 @@
         } else {
             size.number = playgroundSizeNumber
         }
+    })
+
+    watch(rowToWinString, ()=> {
+        rowToWin.number = +rowToWinString.value
     })
 
 </script>

@@ -100,6 +100,7 @@
         align-items: center;
         justify-content: center;
         border: solid 1px #4d72cd;
+        border-radius: 5px;
     }
 
     .field-column:hover {
