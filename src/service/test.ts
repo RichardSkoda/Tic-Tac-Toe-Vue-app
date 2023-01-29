@@ -1,25 +1,24 @@
-export const makeDiagonalsFromTopRight = function(twoDimensArray: Array<Array<string>>, line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): Array<Array<number>> {
+export const makeDiagonalsFromTopRight = function(twoDimensArray: Array<Array<string>>, line: number) {
+    const columns: Array<Array<string>> = []
     let x = 0
     let y = 0
     let tempArray: string[] = []
-    let tempCoor: number[][] = []
 
     for(let i=0; i <= 2*(line - 1); i++) {
-        for(tempArray = [], tempCoor = [], x = line - 1; (y = i - x), x >= 0; x--) {
+        for(tempArray = [], x = line - 1; (y = i - x), x >= 0; x--) {
             if(y >= 0 && y < line) {
                 tempArray.push(twoDimensArray[y][x])
-                tempCoor.push([y, x])
             }
         }
-        if(tempArray.length >= rowToWin && (tempArray.join(',').includes(rowToWinX) || tempArray.join(',').includes(rowToWinO))) {
-            return tempCoor
+        if(tempArray.length > 0) {
+            columns.push(tempArray)
         }
     }
-    return tempCoor
+    return columns
 }
 
 export const makeDiagonalsFromTopLeft = function(twoDimensArray: Array<Array<string>>, line: number) {
-    const diagonals: Array<Array<string>> = []
+    const columns: Array<Array<string>> = []
     let x = 0
     let y = 0
     let tempArray: string[] = []
@@ -31,10 +30,10 @@ export const makeDiagonalsFromTopLeft = function(twoDimensArray: Array<Array<str
             }
         }
         if(tempArray.length > 0) {
-            diagonals.push(tempArray)
+            columns.push(tempArray)
         }
     }
-    return diagonals
+    return columns
 }
 
 export const makeColumns = function(twoDimensArray: Array<Array<string>>, line: number) {
@@ -51,13 +50,12 @@ export const makeColumns = function(twoDimensArray: Array<Array<string>>, line: 
     return columns
 }
 
-// TOTO PRAVDEPODOBNE NEVYUZIJU
-
 // return non empty array if winner is found
 export const checkWinner = function(arrays: Array<Array<string>>, rowToWinX: string, rowToWinO: string): string[] {
     const winner: string[] = []
     arrays.forEach(function(oneArray: string[]): string[] {
         const mergedArray: string = oneArray.join('')
+        console.log(mergedArray)
         if(mergedArray.length >= rowToWinX.length && mergedArray.includes(rowToWinX)) {
             winner.push(rowToWinX)
         } else if(mergedArray.length >= rowToWinO.length && mergedArray.includes(rowToWinO)) {

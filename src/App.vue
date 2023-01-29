@@ -40,11 +40,11 @@
   const playerOneName = ref<string>('X')
   const playerTwoName = ref<string>('O')
   const roundsPlayed = ref<number>(0)
-  const winnerXRow = ref<string>('XXX')
-  const winnerORow = ref<string>('OOO')
+  const winnerXRow = ref<string>('X,X,X')
+  const winnerORow = ref<string>('O,O,O')
   const winner = ref<string[]>([])
   const playgroundColumns = ref<Array<string[]>>([[]])
-  const playgroundDiagonalsFromTopRight = ref<Array<Array<string>>>([[]])
+  const playgroundDiagonalsFromTopRight = ref<Array<Array<number>>>([])
   const playgroundDiagonalsFromTopLeft = ref<Array<Array<string>>>([[]])
   const playgroundAllArray = ref<Array<Array<string>>>([[]])
 
@@ -57,11 +57,11 @@
   }
 
   const computeWinnerRowX = (rowToWin: number) => {
-    return 'X'.repeat(rowToWin)
+    return 'X,'.repeat(rowToWin)
   }
 
   const computeWinnerRowO = (rowToWin: number) => {
-    return 'O'.repeat(rowToWin)
+    return 'O,'.repeat(rowToWin)
   }
 
   const runsIncrement = (symbol: string) => {
@@ -76,16 +76,21 @@
 
   watch(() => roundsPlayed.value, () => {
     playgroundColumns.value = makeColumns(playground.playgroundArray ,size.number)
-    playgroundDiagonalsFromTopRight.value = makeDiagonalsFromTopRight(playground.playgroundArray, size.number)
+    playgroundDiagonalsFromTopRight.value = makeDiagonalsFromTopRight(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
     playgroundDiagonalsFromTopLeft.value = makeDiagonalsFromTopLeft(playground.playgroundArray, size.number)
 
-    playgroundAllArray.value = playgroundColumns.value.concat(playgroundDiagonalsFromTopRight.value, playgroundDiagonalsFromTopLeft.value, playground.playgroundArray)
-    winner.value = checkWinner(playgroundAllArray.value, winnerXRow.value, winnerORow.value)
+    // get coordinates of winning diagonal. Need to get winning row in diagonal and cross out these DIVs in template. Also need to tell who is winner and stop the game
+    console.log(playgroundDiagonalsFromTopRight.value)
 
-    console.log(winner.value)
+    // VSE POD JE K NICEMU
+
+    // playgroundAllArray.value = playgroundColumns.value.concat(playgroundDiagonalsFromTopRight.value, playgroundDiagonalsFromTopLeft.value, playground.playgroundArray)
+    // winner.value = checkWinner(playgroundAllArray.value, winnerXRow.value, winnerORow.value)
+
+    // console.log(winner.value)
     // dodelat vyhodnoceni viteze- checkWinner funci
     if(winner.value.length && winner.value.includes('X')) {
-      console.log(winner.value)
+      // console.log(winner.value)
         winner.value = ['X']
     }
   })
