@@ -18,37 +18,45 @@ export const makeDiagonalsFromTopRight = function(twoDimensArray: Array<Array<st
     return tempCoor
 }
 
-export const makeDiagonalsFromTopLeft = function(twoDimensArray: Array<Array<string>>, line: number) {
-    const diagonals: Array<Array<string>> = []
+export const makeDiagonalsFromTopLeft = function(twoDimensArray: Array<Array<string>>,  line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): Array<Array<number>> {
     let x = 0
     let y = 0
     let tempArray: string[] = []
+    let tempCoor: number[][] = []
 
     for(let i=0; i <= 2*(line - 1); i++) {
-        for(tempArray = [], x = 0; (y = x + (i - (line - 1))), x <= line - 1; x++) {
+        for(tempArray = [], tempCoor = [], x = 0; (y = x + (i - (line - 1))), x <= line - 1; x++) {
             if(y >= 0 && y < line) {
                 tempArray.push(twoDimensArray[y][x])
+                tempCoor.push([y, x])
             }
         }
-        if(tempArray.length > 0) {
-            diagonals.push(tempArray)
+        if(tempArray.length >= rowToWin && (tempArray.join(',').includes(rowToWinX) || tempArray.join(',').includes(rowToWinO))) {
+            return tempCoor
         }
     }
-    return diagonals
+    return tempCoor
 }
 
-export const makeColumns = function(twoDimensArray: Array<Array<string>>, line: number) {
-    const columns: Array<Array<string>> = [] 
-    let column: string[] = []
+// This function does not do what I want!!!!!!!!!!!!
+export const makeColumns = function(twoDimensArray: Array<Array<string>>,  line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): Array<Array<number>> {
+    let x = 0
+    let y = 0
+    let tempArray: string[] = []
+    let tempCoor: number[][] = []
+
     for(let i=0; i < line; i++) {
-        for(let k=0; k < line; k++) {
-            const cellSymbol = twoDimensArray[k][i]
-            column.push(cellSymbol)
+        for(x=0, tempArray = []; tempCoor = [], y = x,x < line; x++) {
+            tempArray.push(twoDimensArray[y][x])
+            tempCoor.push([y, x])
+            console.log(tempArray)
+            console.log(tempCoor)
         }
-        columns.push(column)
-        column = []
+        if(tempArray.length >= rowToWin && (tempArray.join(',').includes(rowToWinX) || tempArray.join(',').includes(rowToWinO))) {
+            return tempCoor
+        }
     }
-    return columns
+    return tempCoor
 }
 
 // TOTO PRAVDEPODOBNE NEVYUZIJU
