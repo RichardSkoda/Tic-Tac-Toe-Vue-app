@@ -34,7 +34,7 @@
   import {ref, watch} from 'vue'
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
-  import {makeDiagonalsFromTopRight, makeDiagonalsFromTopLeft, makeColumns} from '../src/service/winner'
+  import {makeDiagonalsFromTopRight, makeDiagonalsFromTopLeft, makeColumns, makeRows} from '../src/service/winner'
   import {size, rowToWin, playground} from '../src/service/createPlayground'
 
   const playerOneName = ref<string>('X')
@@ -44,6 +44,7 @@
   const winnerORow = ref<string>('O,O,O')
   const winner = ref<string[]>([])
   const playgroundColumns = ref<Array<Array<number>>>([])
+  const playgroundRows = ref<Array<Array<number>>>([])
   const playgroundDiagonalsFromTopRight = ref<Array<Array<number>>>([])
   const playgroundDiagonalsFromTopLeft = ref<Array<Array<number>>>([])
   // const playgroundAllArray = ref<Array<Array<string>>>([[]])
@@ -76,11 +77,12 @@
 
   watch(() => roundsPlayed.value, () => {
     playgroundColumns.value = makeColumns(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+    playgroundRows.value = makeRows(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
     playgroundDiagonalsFromTopRight.value = makeDiagonalsFromTopRight(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
     playgroundDiagonalsFromTopLeft.value = makeDiagonalsFromTopLeft(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
 
     // get coordinates of winning diagonal. Need to get winning row in diagonal and cross out these DIVs in template. Also need to tell who is winner and stop the game
-    // console.log(playgroundColumns.value)
+    console.log(playgroundRows.value)
 
     // VSE POD JE K NICEMU
 
