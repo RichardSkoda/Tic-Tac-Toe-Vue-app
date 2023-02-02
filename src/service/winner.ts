@@ -91,12 +91,10 @@ export const makeRows = function(twoDimensArray: Array<Array<string>>,  line: nu
 }
 
 export const checkWinner = function(twoDimensArray: Array<Array<string>>, winRow: Array<Array<number>>, rowToWin: number, rowToWinX: string, rowToWinO: string): Array<number[]> {
-    let winCoorArray: Array<Array<number>> = []
-    let winSymbolRow: string[] = []
-    let winaaa: string[] = []
-
 // create row of symbols from row of 2D array
     let winRowSymbol: string[] = []
+    let winRowIndex: Array<number[]> = []
+
     winRow.forEach(function(cell) {
         if(twoDimensArray[cell[0]][cell[1]] === 'X' || twoDimensArray[cell[0]][cell[1]] === 'O') {
             winRowSymbol.push(twoDimensArray[cell[0]][cell[1]])
@@ -107,8 +105,7 @@ export const checkWinner = function(twoDimensArray: Array<Array<string>>, winRow
 // create row of winning coordinates from rof of symbols + [0] for X and [1] for O at the end
     const cleanWinRowSymbolX: number = winRowSymbol.join('').indexOf(rowToWinX)
     const cleanWinRowSymbolO: number = winRowSymbol.join('').indexOf(rowToWinO)
-
-    let winRowIndex: Array<number[]> = []
+    
     if(cleanWinRowSymbolX != -1) {
         for(let i = 0; i <= rowToWin - 1; i++) {
             winRowIndex.push(winRow[cleanWinRowSymbolX + i])

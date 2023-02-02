@@ -94,19 +94,6 @@
     }
 
     console.log(checkWinnerr)
-
-
-    // VSE POD JE K NICEMU
-
-    // playgroundAllArray.value = playgroundColumns.value.concat(playgroundDiagonalsFromTopRight.value, playgroundDiagonalsFromTopLeft.value, playground.playgroundArray)
-    // winner.value = checkWinner(playgroundAllArray.value, winnerXRow.value, winnerORow.value)
-
-    // console.log(winner.value)
-    // dodelat vyhodnoceni viteze- checkWinner funci
-    if(winner.value.length && winner.value.includes('X')) {
-      // console.log(winner.value)
-        winner.value = ['X']
-    }
   })
 
 </script>

@@ -16,7 +16,8 @@
                 :style="{
                     'width': cellSize,
                     'height': cellSize,
-                    'font-size': symbolSize
+                    'font-size': symbolSize,
+                    'border-radius': cellRadius
                     }"
                 v-for="(cell, y) in row"
                 :key="y"
@@ -34,6 +35,7 @@
 
     const cellSize = ref<string>('75px')
     const symbolSize = ref<string>('300%')
+    const cellRadius = ref<string>('7%')
     // const playground = ref<Array<string[]>>([['', '', ''], ['', '', ''], ['', '', '']])
     
 
@@ -71,12 +73,15 @@
         if(size.number <= 3 && size.number <= 10) {
             cellSize.value = '75px'
             symbolSize.value = '300%'
+            cellRadius.value = '7%'
         } else if(size.number > 10 && size.number <= 15) {
             cellSize.value = '50px'
             symbolSize.value = '200%'
+            cellRadius.value = '10%'
         } else if(size.number > 15) {
             cellSize.value = '20px'
             symbolSize.value = '90%'
+            cellRadius.value = '20%'
         }
         playground.playgroundArray = createPlayground(size.number)
     })
@@ -100,7 +105,6 @@
         align-items: center;
         justify-content: center;
         border: solid 1px #4d72cd;
-        border-radius: 5px;
     }
 
     .field-column:hover {
