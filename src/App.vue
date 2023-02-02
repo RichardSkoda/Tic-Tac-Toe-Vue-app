@@ -34,14 +34,14 @@
   import {ref, watch} from 'vue'
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
-  import {makeDiagonalsFromTopRight, makeDiagonalsFromTopLeft, makeColumns, makeRows} from '../src/service/winner'
+  import {makeDiagonalsFromTopRight, makeDiagonalsFromTopLeft, makeColumns, makeRows, checkWinner} from '../src/service/winner'
   import {size, rowToWin, playground} from '../src/service/createPlayground'
 
   const playerOneName = ref<string>('X')
   const playerTwoName = ref<string>('O')
   const roundsPlayed = ref<number>(0)
-  const winnerXRow = ref<string>('X,X,X')
-  const winnerORow = ref<string>('O,O,O')
+  const winnerXRow = ref<string>('XXX')
+  const winnerORow = ref<string>('OOO')
   const winner = ref<string[]>([])
   const playgroundColumns = ref<Array<Array<number>>>([])
   const playgroundRows = ref<Array<Array<number>>>([])
@@ -58,11 +58,11 @@
   }
 
   const computeWinnerRowX = (rowToWin: number) => {
-    return 'X,'.repeat(rowToWin)
+    return 'X'.repeat(rowToWin)
   }
 
   const computeWinnerRowO = (rowToWin: number) => {
-    return 'O,'.repeat(rowToWin)
+    return 'O'.repeat(rowToWin)
   }
 
   const runsIncrement = (symbol: string) => {
@@ -82,7 +82,19 @@
     playgroundDiagonalsFromTopLeft.value = makeDiagonalsFromTopLeft(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
 
     // get coordinates of winning diagonal. Need to get winning row in diagonal and cross out these DIVs in template. Also need to tell who is winner and stop the game
-    console.log(playgroundRows.value)
+    let checkWinnerr: Array<Array<number>> = []
+    if(playgroundColumns.value.length > 1) {
+      checkWinnerr = checkWinner(playground.playgroundArray, playgroundColumns.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+    } else if(playgroundRows.value.length > 1) {
+      checkWinnerr = checkWinner(playground.playgroundArray, playgroundRows.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+    } else if(playgroundDiagonalsFromTopLeft.value.length > 1) {
+      checkWinnerr = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopLeft.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+    } else if(playgroundDiagonalsFromTopRight.value.length > 1) {
+      checkWinnerr = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopRight.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+    }
+
+    console.log(checkWinnerr)
+
 
     // VSE POD JE K NICEMU
 
