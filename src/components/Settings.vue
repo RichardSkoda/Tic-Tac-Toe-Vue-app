@@ -95,7 +95,7 @@ select {
 option {
     font-family: 'Indie Flower';
     padding-left: calc(50% - 1em);
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .container {

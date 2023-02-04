@@ -47,11 +47,11 @@
 </template>
 
 <script setup lang="ts">
-  import {ref, watch, toRaw} from 'vue'
+  import {ref, watch} from 'vue'
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
   import Reset from './components/Reset.vue'
-  import {makeDiagonalsFromTopRight, makeDiagonalsFromTopLeft, makeColumns, makeRows, checkWinner} from '../src/service/winner'
+  import Winner from '../src/service/winner'
   import {size, rowToWin, playground, newGame} from '../src/service/createPlayground'
 
   const playerOneName = ref<string>('X')
@@ -60,10 +60,10 @@
   const winnerXRow = ref<string>('XXX')
   const winnerORow = ref<string>('OOO')
   const winner = ref<Array<Array<number>>>([])
-  const playgroundColumns = ref<Array<Array<number>>>([])
-  const playgroundRows = ref<Array<Array<number>>>([])
-  const playgroundDiagonalsFromTopRight = ref<Array<Array<number>>>([])
-  const playgroundDiagonalsFromTopLeft = ref<Array<Array<number>>>([])
+  const column = ref<Array<Array<number>>>([])
+  const row = ref<Array<Array<number>>>([])
+  const fromTopRightDiagonal = ref<Array<Array<number>>>([])
+  const fromTopLeftDiagonal = ref<Array<Array<number>>>([])
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved
@@ -95,28 +95,28 @@
   })
 
   watch(() => roundsPlayed.value, () => {
-    playgroundColumns.value = makeColumns(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
-    playgroundRows.value = makeRows(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
-    playgroundDiagonalsFromTopRight.value = makeDiagonalsFromTopRight(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
-    playgroundDiagonalsFromTopLeft.value = makeDiagonalsFromTopLeft(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+    column.value = Winner.column(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+    row.value = Winner.row(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+    fromTopRightDiagonal.value = Winner.fromTopRightDiagonal(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+    fromTopLeftDiagonal.value = Winner.fromTopLeftDiagonal(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
 
     // get coordinates of winning diagonal. Need to get winning row in diagonal and cross out these DIVs in template. Also need to tell who is winner and stop the game
-    if(playgroundColumns.value.length > 1) {
-      winner.value = checkWinner(playground.playgroundArray, playgroundColumns.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+    if(column.value.length > 1) {
+      winner.value = Winner.checkWinner(playground.playgroundArray, column.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([1])
-      newGame.number = (toRaw(winner.value[winner.value.length - 2]))[0]
-    } else if(playgroundRows.value.length > 1) {
-      winner.value = checkWinner(playground.playgroundArray, playgroundRows.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      newGame.number = (winner.value[winner.value.length - 2])[0]
+      console.log(newGame.number)
+    } else if(row.value.length > 1) {
+      winner.value = Winner.checkWinner(playground.playgroundArray, row.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([2])
-      newGame.number = (toRaw(winner.value[winner.value.length - 2]))[0]
-    } else if(playgroundDiagonalsFromTopLeft.value.length > 1) {
-      winner.value = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopLeft.value, rowToWin.number, winnerXRow.value, winnerORow.value)
-      winner.value.push([3])
-      newGame.number = (toRaw(winner.value[winner.value.length - 2]))[0]
-    } else if(playgroundDiagonalsFromTopRight.value.length > 1) {
-      winner.value = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopRight.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      newGame.number = (winner.value[winner.value.length - 2])[0]
+    } else if(fromTopLeftDiagonal.value.length > 1) {
+      winner.value = Winner.checkWinner(playground.playgroundArray, fromTopLeftDiagonal.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      newGame.number = (winner.value[winner.value.length - 2])[0]
+    } else if(fromTopRightDiagonal.value.length > 1) {
+      winner.value = Winner.checkWinner(playground.playgroundArray, fromTopRightDiagonal.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([4])
-      newGame.number = (toRaw(winner.value[winner.value.length - 2]))[0]
+      newGame.number = (winner.value[winner.value.length - 2])[0]
     }
   })
 

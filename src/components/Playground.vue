@@ -105,6 +105,7 @@
         align-items: center;
         justify-content: center;
         border: solid 1px #4d72cd;
+        /* box-shadow: 4px 4px 10px rgba(0, 0, 0, .3); */
     }
 
     .field-column:hover {

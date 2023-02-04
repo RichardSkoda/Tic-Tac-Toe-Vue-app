@@ -1,4 +1,4 @@
-import {createApp, reactive} from 'vue'
+import {reactive} from 'vue'
 
 export const size = reactive({number: 3})
 
