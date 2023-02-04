@@ -53,19 +53,12 @@
     }>()
 
     const playerMove = (x: number, y: number) => {
-        if(playground.playgroundArray[x][y] != '') {
-            emits('runs-increment')
-            return
-        }
-
         if((props.rounds === 0 || props.rounds % 2 === 0 && playground.playgroundArray[x][y] === '')) {
             playground.playgroundArray[x][y] = 'X'
             emits('runs-increment')
-            return playground.playgroundArray[x][y]
         } else if((props.rounds % 2 != 0 && playground.playgroundArray[x][y] === '')) {
             playground.playgroundArray[x][y] = 'O'
             emits('runs-increment')
-            return playground.playgroundArray[x][y]
         }
     }
 
