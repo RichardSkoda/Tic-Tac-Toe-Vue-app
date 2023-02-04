@@ -1,41 +1,43 @@
 <template>
-    <div>
-        <div>
-            <p>Player 1 name</p>
-            <input
-                type="text"
-                v-model="playerOneName"
-                @change="changeNameOne(playerOneName)"
-            >
-        </div>
-        <div>
-            <p>Player 2 name</p>
-            <input
-                type="text"
-                v-model="playerTwoName"
-                @change="changeNameTwo(playerTwoName)"
-            >
-        </div>
-        <div>
-            <p>Fields number</p>
-            <input
-                type="text"
-                v-model="playgroundSizeString"
+    <div class="container">
+        <div class="form-container">
+            <div>
+                <p>Player 1 name</p>
+                <input
+                    type="text"
+                    v-model="playerOneName"
+                    @change="changeNameOne(playerOneName)"
                 >
-        </div>
-        <div>
-            <label for="rowToWin">Row to win:</label>
-            <select
-                name="rowToWin" 
-                id=""
-                v-model="rowToWinString"
+            </div>
+            <div>
+                <p>Player 2 name</p>
+                <input
+                    type="text"
+                    v-model="playerTwoName"
+                    @change="changeNameTwo(playerTwoName)"
                 >
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-            </select>
+            </div>
+            <div>
+                <p>Fields number</p>
+                <input
+                    type="text"
+                    v-model="playgroundSizeString"
+                    >
+            </div>
+            <div>
+                <label for="rowToWin">Row to win:</label>
+                <select
+                    name="rowToWin" 
+                    id=""
+                    v-model="rowToWinString"
+                    >
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                </select>
         </div>
+    </div>
     </div>
 </template>
 
@@ -79,13 +81,46 @@
 
 </script>
 
-<style>
+<style scoped>
 p, label {
-    color: #1d1b20 1;
+    font-family: 'Times New Roman', Times, serif;
+    color:#4d72cd;
+    font-size: 10px;
+}
+
+select {
+    text-indent: 2.5%;
+}
+
+option {
+    font-family: 'Indie Flower';
+    padding-left: calc(50% - 1em);
+    font-size: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    background-color:  #4d72cd;
+    padding: 2% 2%;
+    border-bottom-right-radius: 10%;
+}
+
+.form-container {
+    background-color: white;
+    padding: 5%;
+    width: 300px;
+    border-radius: 10%;
 }
 
 input, select {
+    text-align: center;
+    background-color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
     border: none;
+    border-bottom: 1px solid #4d72cd;
     outline: none;
 }
 </style>

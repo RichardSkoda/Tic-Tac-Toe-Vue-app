@@ -23,7 +23,7 @@
     <div class="player-one-round-container">
         <h2 v-show="roundsPlayed == 0 || roundsPlayed % 2 == 0 ">{{ playerOneName }}'s turn</h2>
         <div v-show="XxOWinner === 0">
-          <p>{{ playerOneName }}</p>
+          <p>{{ playerOneName }}'s</p>
           <p>WINNER</p>
         </div>
         
@@ -31,7 +31,7 @@
     <div class="player-two-round-container">
         <h2 v-show="roundsPlayed % 2 != 0">{{ playerTwoName }}'s turn</h2>
         <div v-show="XxOWinner === 1">
-          <p>{{ playerOneName }}</p>
+          <p>{{ playerTwoName }}'s</p>
           <p>WINNER</p>
         </div>
     </div>
@@ -74,9 +74,8 @@
     return 'O'.repeat(rowToWin)
   }
 
-  const runsIncrement = (symbol: string) => {
-    if(symbol === 'X' || symbol === 'O')
-      roundsPlayed.value += 1
+  const runsIncrement = () => {
+    roundsPlayed.value += 1
   }
 
   watch(() => rowToWin.number, () => {
@@ -116,6 +115,12 @@
 </script>
 
 <style scoped>
+
+p {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
 .main {
     background-image: url('../src/images/Hippopx.jpg');
     display: flex;
@@ -132,8 +137,8 @@
 
   .selection-position {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 0;
+    left: 0;
   }
 
   .playground {
@@ -158,7 +163,7 @@
   }
 
   .gameover {
-    cursor: not-allowed;
+    pointer-events: none;
     opacity: 0.5;
   }
 </style>
