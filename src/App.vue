@@ -4,15 +4,22 @@
 
     <Settings
       class="selection-position"
+      :class="{gameover: newGame.number != -1}"
       :name-one="playerOneName"
       :name-two="playerTwoName"
       @change-name-one="changeNameOne"
       @change-name-two="changeNameTwo"
       />
 
+      <div class="reset-button">
+        <Reset
+        @run-reset="runReset"
+        />
+      </div>
+
 
     <div class="playground"
-      :class="{gameover: XxOWinner != -1}"
+      :class="{gameover: newGame.number != -1}"
     >
       <Playground
         :rounds="roundsPlayed"
@@ -21,8 +28,8 @@
     </div>
 
     <div class="player-one-round-container">
-        <h2 v-show="roundsPlayed == 0 || roundsPlayed % 2 == 0 ">{{ playerOneName }}'s turn</h2>
-        <div v-show="XxOWinner === 0">
+        <h2 v-show="roundsPlayed === 0 || roundsPlayed % 2 === 0 ">{{ playerOneName }}'s turn</h2>
+        <div v-show="newGame.number === 0">
           <p>{{ playerOneName }}'s</p>
           <p>WINNER</p>
         </div>
@@ -30,7 +37,7 @@
     </div>
     <div class="player-two-round-container">
         <h2 v-show="roundsPlayed % 2 != 0">{{ playerTwoName }}'s turn</h2>
-        <div v-show="XxOWinner === 1">
+        <div v-show="newGame.number === 1">
           <p>{{ playerTwoName }}'s</p>
           <p>WINNER</p>
         </div>
@@ -43,8 +50,9 @@
   import {ref, watch, toRaw} from 'vue'
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
+  import Reset from './components/Reset.vue'
   import {makeDiagonalsFromTopRight, makeDiagonalsFromTopLeft, makeColumns, makeRows, checkWinner} from '../src/service/winner'
-  import {size, rowToWin, playground} from '../src/service/createPlayground'
+  import {size, rowToWin, playground, newGame} from '../src/service/createPlayground'
 
   const playerOneName = ref<string>('X')
   const playerTwoName = ref<string>('O')
@@ -56,7 +64,6 @@
   const playgroundRows = ref<Array<Array<number>>>([])
   const playgroundDiagonalsFromTopRight = ref<Array<Array<number>>>([])
   const playgroundDiagonalsFromTopLeft = ref<Array<Array<number>>>([])
-  let XxOWinner: number = -1
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved
@@ -78,6 +85,10 @@
     roundsPlayed.value += 1
   }
 
+  const runReset = () => {
+    roundsPlayed.value = 0
+  }
+
   watch(() => rowToWin.number, () => {
     winnerXRow.value = computeWinnerRowX(rowToWin.number)
     winnerORow.value = computeWinnerRowO(rowToWin.number)
@@ -93,23 +104,20 @@
     if(playgroundColumns.value.length > 1) {
       winner.value = checkWinner(playground.playgroundArray, playgroundColumns.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([1])
-      XxOWinner = (toRaw(winner.value[winner.value.length - 2]))[0]
+      newGame.number = (toRaw(winner.value[winner.value.length - 2]))[0]
     } else if(playgroundRows.value.length > 1) {
       winner.value = checkWinner(playground.playgroundArray, playgroundRows.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([2])
-      XxOWinner = (toRaw(winner.value[winner.value.length - 2]))[0]
+      newGame.number = (toRaw(winner.value[winner.value.length - 2]))[0]
     } else if(playgroundDiagonalsFromTopLeft.value.length > 1) {
       winner.value = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopLeft.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([3])
-      XxOWinner = (toRaw(winner.value[winner.value.length - 2]))[0]
+      newGame.number = (toRaw(winner.value[winner.value.length - 2]))[0]
     } else if(playgroundDiagonalsFromTopRight.value.length > 1) {
       winner.value = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopRight.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([4])
-      XxOWinner = (toRaw(winner.value[winner.value.length - 2]))[0]
+      newGame.number = (toRaw(winner.value[winner.value.length - 2]))[0]
     }
-
-    // console.log(winner.value)
-    // console.log(toRaw(winner.value[winner.value.length - 2]))
   })
 
 </script>
@@ -165,5 +173,11 @@ p {
   .gameover {
     pointer-events: none;
     opacity: 0.5;
+  }
+
+  .reset-button {
+    position: absolute;
+    top: 12%;
+    right: 5.5%;
   }
 </style>
