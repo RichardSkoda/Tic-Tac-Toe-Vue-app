@@ -74,13 +74,12 @@ export const makeRows = function(twoDimensArray: Array<Array<string>>,  line: nu
 
     for(let i=0; i <= line - 1; i++) {
         for(tempArray = [], tempCoor = [], x = 0; (y = i), x <= line - 1; x++) {
-            tempArray.push(twoDimensArray[y][x])
             if(twoDimensArray[y][x] === 'X' || twoDimensArray[y][x] === 'O') {
                 tempArray.push(twoDimensArray[y][x])
             } else tempArray.push('-')
             tempCoor.push([y, x])
         }
-        if(tempArray.join(',').includes(rowToWinX) || tempArray.join(',').includes(rowToWinO)) {
+        if(tempArray.join('').includes(rowToWinX) || tempArray.join('').includes(rowToWinO)) {
             return tempCoor
         }
     }
@@ -91,7 +90,7 @@ export const makeRows = function(twoDimensArray: Array<Array<string>>,  line: nu
 }
 
 export const checkWinner = function(twoDimensArray: Array<Array<string>>, winRow: Array<Array<number>>, rowToWin: number, rowToWinX: string, rowToWinO: string): Array<number[]> {
-// create row of symbols from row of 2D array
+// create row of symbols from row of indexes of 2D array
     let winRowSymbol: string[] = []
     let winRowIndex: Array<number[]> = []
 
@@ -102,18 +101,18 @@ export const checkWinner = function(twoDimensArray: Array<Array<string>>, winRow
         
     })
 
-// create row of winning coordinates from rof of symbols + [0] for X and [1] for O at the end
-    const cleanWinRowSymbolX: number = winRowSymbol.join('').indexOf(rowToWinX)
-    const cleanWinRowSymbolO: number = winRowSymbol.join('').indexOf(rowToWinO)
+// create row of winning coordinates from row of symbols + [0] for X and [1] for O at the end
+    const firstIndexX: number = winRowSymbol.join('').indexOf(rowToWinX)
+    const firstIndexO: number = winRowSymbol.join('').indexOf(rowToWinO)
     
-    if(cleanWinRowSymbolX != -1) {
+    if(firstIndexX != -1) {
         for(let i = 0; i <= rowToWin - 1; i++) {
-            winRowIndex.push(winRow[cleanWinRowSymbolX + i])
+            winRowIndex.push(winRow[firstIndexX + i])
         }
         winRowIndex.push([0])
-    }else if(cleanWinRowSymbolO != -1) {
+    }else if(firstIndexO != -1) {
         for(let i = 0; i <= rowToWin - 1; i++) {
-            winRowIndex.push(winRow[cleanWinRowSymbolO + i])
+            winRowIndex.push(winRow[firstIndexO + i])
         }
         winRowIndex.push([1])
     }

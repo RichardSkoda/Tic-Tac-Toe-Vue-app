@@ -11,7 +11,9 @@
       />
 
 
-    <div class="playground">
+    <div class="playground"
+      :class="{gameover: XxOWinner != -1}"
+    >
       <Playground
         :rounds="roundsPlayed"
         @runs-increment="runsIncrement"
@@ -20,18 +22,25 @@
 
     <div class="player-one-round-container">
         <h2 v-show="roundsPlayed == 0 || roundsPlayed % 2 == 0 ">{{ playerOneName }}'s turn</h2>
-        <p v-show="winner.includes('X')">WINNER</p>
+        <div v-show="XxOWinner === 0">
+          <p>{{ playerOneName }}</p>
+          <p>WINNER</p>
+        </div>
+        
     </div>
     <div class="player-two-round-container">
         <h2 v-show="roundsPlayed % 2 != 0">{{ playerTwoName }}'s turn</h2>
-        <p v-show="winner.includes('O')">WINNER</p>
+        <div v-show="XxOWinner === 1">
+          <p>{{ playerOneName }}</p>
+          <p>WINNER</p>
+        </div>
     </div>
   </div>
   
 </template>
 
 <script setup lang="ts">
-  import {ref, watch} from 'vue'
+  import {ref, watch, toRaw} from 'vue'
   import Playground from './components/Playground.vue'
   import Settings from './components/Settings.vue'
   import {makeDiagonalsFromTopRight, makeDiagonalsFromTopLeft, makeColumns, makeRows, checkWinner} from '../src/service/winner'
@@ -42,12 +51,12 @@
   const roundsPlayed = ref<number>(0)
   const winnerXRow = ref<string>('XXX')
   const winnerORow = ref<string>('OOO')
-  const winner = ref<string[]>([])
+  const winner = ref<Array<Array<number>>>([])
   const playgroundColumns = ref<Array<Array<number>>>([])
   const playgroundRows = ref<Array<Array<number>>>([])
   const playgroundDiagonalsFromTopRight = ref<Array<Array<number>>>([])
   const playgroundDiagonalsFromTopLeft = ref<Array<Array<number>>>([])
-  // const playgroundAllArray = ref<Array<Array<string>>>([[]])
+  let XxOWinner: number = -1
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved
@@ -82,18 +91,26 @@
     playgroundDiagonalsFromTopLeft.value = makeDiagonalsFromTopLeft(playground.playgroundArray, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
 
     // get coordinates of winning diagonal. Need to get winning row in diagonal and cross out these DIVs in template. Also need to tell who is winner and stop the game
-    let checkWinnerr: Array<Array<number>> = []
     if(playgroundColumns.value.length > 1) {
-      checkWinnerr = checkWinner(playground.playgroundArray, playgroundColumns.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value = checkWinner(playground.playgroundArray, playgroundColumns.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value.push([1])
+      XxOWinner = (toRaw(winner.value[winner.value.length - 2]))[0]
     } else if(playgroundRows.value.length > 1) {
-      checkWinnerr = checkWinner(playground.playgroundArray, playgroundRows.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value = checkWinner(playground.playgroundArray, playgroundRows.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value.push([2])
+      XxOWinner = (toRaw(winner.value[winner.value.length - 2]))[0]
     } else if(playgroundDiagonalsFromTopLeft.value.length > 1) {
-      checkWinnerr = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopLeft.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopLeft.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value.push([3])
+      XxOWinner = (toRaw(winner.value[winner.value.length - 2]))[0]
     } else if(playgroundDiagonalsFromTopRight.value.length > 1) {
-      checkWinnerr = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopRight.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value = checkWinner(playground.playgroundArray, playgroundDiagonalsFromTopRight.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value.push([4])
+      XxOWinner = (toRaw(winner.value[winner.value.length - 2]))[0]
     }
 
-    console.log(checkWinnerr)
+    // console.log(winner.value)
+    // console.log(toRaw(winner.value[winner.value.length - 2]))
   })
 
 </script>
@@ -138,5 +155,10 @@
 
   .player-one-round-container {
     left: 1%;
+  }
+
+  .gameover {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 </style>
