@@ -128,7 +128,6 @@
     if(column.value.length > 1) {
       winner.value = Winner.checkWinner(playground.playgroundArray, column.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([1])
-      console.log(winner.value.length)
       newGame.number = (winner.value[winner.value.length - 2])[0]
     } else if(row.value.length > 1) {
       winner.value = Winner.checkWinner(playground.playgroundArray, row.value, rowToWin.number, winnerXRow.value, winnerORow.value)
@@ -136,6 +135,7 @@
       newGame.number = (winner.value[winner.value.length - 2])[0]
     } else if(fromTopLeftDiagonal.value.length > 1) {
       winner.value = Winner.checkWinner(playground.playgroundArray, fromTopLeftDiagonal.value, rowToWin.number, winnerXRow.value, winnerORow.value)
+      winner.value.push([3])
       newGame.number = (winner.value[winner.value.length - 2])[0]
     } else if(fromTopRightDiagonal.value.length > 1) {
       winner.value = Winner.checkWinner(playground.playgroundArray, fromTopRightDiagonal.value, rowToWin.number, winnerXRow.value, winnerORow.value)
