@@ -17,7 +17,6 @@
         />
       </div>
 
-
     <div class="playground"
       :class="{gameover: newGame.number != -1}"
     >
@@ -27,20 +26,44 @@
       />
     </div>
 
-    <div class="player-one-round-container">
-        <h2 v-show="roundsPlayed === 0 || roundsPlayed % 2 === 0 ">{{ playerOneName }}'s turn</h2>
-        <div v-show="newGame.number === 0">
-          <p>{{ playerOneName }}'s</p>
-          <p>WINNER</p>
+    <div
+      class="player-one-round-win-container"
+      >
+      <div
+        :class="{
+          playerTurnContainerEmpty: roundsPlayed % 2 != 0 && winner.length > 1,
+          playerTurnContainer: (roundsPlayed === 0 || roundsPlayed % 2 === 0 && winner.length < 1)}"
+          >
+        <div
+          class="player-turn"
+          v-show="(roundsPlayed === 0 || roundsPlayed % 2 === 0) && winner.length < 1">
+          {{ playerOneName }}'s turn
         </div>
-        
+      </div>
+      <div v-show="newGame.number === 0">
+        <p>{{ playerOneName }}'s</p>
+        <p>WINNER</p>
+      </div>
     </div>
-    <div class="player-two-round-container">
-        <h2 v-show="roundsPlayed % 2 != 0">{{ playerTwoName }}'s turn</h2>
-        <div v-show="newGame.number === 1">
-          <p>{{ playerTwoName }}'s</p>
-          <p>WINNER</p>
+
+    <div
+      class="player-two-round-win-container"
+      >
+      <div
+        :class="{
+          playerTurnContainerEmpty: (roundsPlayed === 0 || roundsPlayed % 2 === 0) && winner.length > 1,
+          playerTurnContainer: roundsPlayed % 2 != 0 && winner.length < 1}"
+          >
+        <div 
+          class="player-turn"
+          v-show="roundsPlayed % 2 != 0 && winner.length < 1">
+          {{ playerTwoName }}'s turn
         </div>
+      </div>
+      <div v-show="newGame.number === 1">
+        <p>{{ playerTwoName }}'s</p>
+        <p>WINNER</p>
+      </div>
     </div>
   </div>
   
@@ -87,6 +110,7 @@
 
   const runReset = () => {
     roundsPlayed.value = 0
+    winner.value = []
   }
 
   watch(() => rowToWin.number, () => {
@@ -104,8 +128,8 @@
     if(column.value.length > 1) {
       winner.value = Winner.checkWinner(playground.playgroundArray, column.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([1])
+      console.log(winner.value.length)
       newGame.number = (winner.value[winner.value.length - 2])[0]
-      console.log(newGame.number)
     } else if(row.value.length > 1) {
       winner.value = Winner.checkWinner(playground.playgroundArray, row.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       winner.value.push([2])
@@ -156,7 +180,7 @@ p {
     transform: translate(-50%, -50%);
   }
 
-  .player-one-round-container, .player-two-round-container {
+  .player-one-round-win-container, .player-two-round-win-container {
     position: fixed;
     top: 50%;
     right: 1%;
@@ -166,8 +190,26 @@ p {
     color:  #1d1b20;
   }
 
-  .player-one-round-container {
+  .player-one-round-win-container {
     left: 1%;
+  }
+
+  .playerTurnContainer {
+    background-color:  #4d72cd;
+    border-radius: 10px;
+    padding: 10px 10px;
+  }
+
+  .playerTurnContainerEmpty {
+    background-color: none;
+  }
+
+  .player-turn {
+    background-color: white;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 5px 8px;
+    border-radius: 10px;
   }
 
   .gameover {

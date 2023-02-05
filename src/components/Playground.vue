@@ -37,11 +37,9 @@
     const symbolSize = ref<string>('300%')
     const cellRadius = ref<string>('7%')
     // const playground = ref<Array<string[]>>([['', '', ''], ['', '', ''], ['', '', '']])
-    
 
     interface Props {
         rounds: number
-
     }
 
     const props = withDefaults(defineProps<Props>(), {

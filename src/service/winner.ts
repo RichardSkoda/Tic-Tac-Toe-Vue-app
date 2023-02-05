@@ -120,5 +120,4 @@ export default class Winner {
     
         return winRowIndex
     }
-
 }
