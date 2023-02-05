@@ -32,24 +32,25 @@
         height: 65px;
         border-radius: 10px;
         padding: 7% 5%;
+        box-shadow: 4px 4px 7px rgba(0, 0, 0, .5);
     }
 
     button {
-        background-color: white;
-        color: #4d72cd;
-        border: none;
+        background-color: #4d72cd;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, .1);
         border-radius: 10px;
         padding: 5px 8px;
         font-size: 20px;
         cursor: pointer;
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, .5);
+        box-shadow: 4px 4px 7px rgba(0, 0, 0, .5);
         transition: all ease .05s;
     }
 
     button:hover {
-        background-color: #4d72cd;
-        color: white;
-        border: 1px solid rgba(255, 255, 255, .1);
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+        margin-top: 1px;
+        margin-left: 1.5px;
     }
 
     button:active {

@@ -36,7 +36,6 @@
     const cellSize = ref<string>('75px')
     const symbolSize = ref<string>('300%')
     const cellRadius = ref<string>('7%')
-    // const playground = ref<Array<string[]>>([['', '', ''], ['', '', ''], ['', '', '']])
 
     interface Props {
         rounds: number
@@ -96,13 +95,13 @@
         align-items: center;
         justify-content: center;
         border: solid 1px #4d72cd;
-        /* box-shadow: 4px 4px 10px rgba(0, 0, 0, .3); */
+        box-shadow: 4px 4px 5px rgba(0, 0, 0, .3);
     }
 
     .field-column:hover {
         background-color: rgba(77, 114, 205, 0.5);
     }
-/* nabindovat classu na zmenu hrace */
+
     .cellx {
         cursor: default;
         font-size: 300%;

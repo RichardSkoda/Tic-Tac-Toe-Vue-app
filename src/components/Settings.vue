@@ -68,8 +68,9 @@
         if(playgroundSizeNumber > 38) {
             size.number = 38
             playgroundSizeString.value = '38'
-        } else if(playgroundSizeNumber < 3) {
-            size.number = 3            
+        } else if(playgroundSizeNumber <= 3) {
+            size.number = 3
+            rowToWinString.value = '3'    
         } else {
             size.number = playgroundSizeNumber
         }
@@ -104,6 +105,7 @@ option {
     background-color:  #4d72cd;
     padding: 2% 2%;
     border-bottom-right-radius: 10%;
+    box-shadow: 4px 4px 7px rgba(0, 0, 0, .5);
 }
 
 .form-container {
@@ -111,6 +113,7 @@ option {
     padding: 5%;
     width: 300px;
     border-radius: 10%;
+    box-shadow: 4px 4px 7px rgba(0, 0, 0, .5);
 }
 
 input, select {

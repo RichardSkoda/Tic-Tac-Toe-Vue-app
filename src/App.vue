@@ -163,7 +163,7 @@ p {
   .main-title {
     position: absolute;
     top: 5%;
-    right: 5%;
+    right: 6%;
     color:  #1d1b20 ;
   }
 
@@ -188,6 +188,7 @@ p {
     display: flex;
     justify-content: center;
     color:  #1d1b20;
+    
   }
 
   .player-one-round-win-container {
@@ -198,6 +199,7 @@ p {
     background-color:  #4d72cd;
     border-radius: 10px;
     padding: 10px 10px;
+    box-shadow: 4px 4px 7px rgba(0, 0, 0, .5);
   }
 
   .playerTurnContainerEmpty {
@@ -210,6 +212,7 @@ p {
     font-weight: bold;
     padding: 5px 8px;
     border-radius: 10px;
+    box-shadow: 4px 4px 7px rgba(0, 0, 0, .5);
   }
 
   .gameover {
@@ -220,6 +223,6 @@ p {
   .reset-button {
     position: absolute;
     top: 12%;
-    right: 5.5%;
+    right: 6.5%;
   }
 </style>
