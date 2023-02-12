@@ -65,15 +65,14 @@
     
     watch(playgroundSizeString, ()=> {
         const playgroundSizeNumber = +playgroundSizeString.value
+
         if(playgroundSizeNumber > 38) {
             size.number = 38
             playgroundSizeString.value = '38'
         } else if(playgroundSizeNumber <= 3) {
             size.number = 3
             rowToWinString.value = '3'    
-        } else {
-            size.number = playgroundSizeNumber
-        }
+        } else size.number = playgroundSizeNumber
     })
 
     watch(rowToWinString, ()=> {

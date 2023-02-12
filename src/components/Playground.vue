@@ -11,7 +11,8 @@
                 class="field-column material-icons-outlined"
                 :class="{
                     cellx: cell === 'X',
-                    cello: cell === 'O'
+                    cello: cell === 'O',
+                    // aaa: Winner.winCoordinates([[0, 0], [0,1], [0,2], [0]], y, x, rowToWin.number)
                 }"
                 :style="{
                     'width': cellSize,
@@ -31,18 +32,22 @@
 
 <script setup lang="ts">
     import {ref, watch} from 'vue'
-    import {size, playground, createPlayground} from '../service/createPlayground'
+    import {size, playground, createPlayground, rowToWin} from '../service/createPlayground'
+    import { numberMatrix } from '../types/types'
+    import Winner from '../service/winner'
 
     const cellSize = ref<string>('75px')
     const symbolSize = ref<string>('300%')
     const cellRadius = ref<string>('7%')
 
     interface Props {
-        rounds: number
+        rounds: number,
+        winnerCoorArray: numberMatrix
     }
 
     const props = withDefaults(defineProps<Props>(), {
-        rounds: 0
+        rounds: 0,
+        winnerCoorArray: [[0, 99]]
     })
 
     const emits = defineEmits<{
@@ -50,10 +55,10 @@
     }>()
 
     const playerMove = (x: number, y: number) => {
-        if((props.rounds === 0 || props.rounds % 2 === 0 && playground.playgroundArray[x][y] === '')) {
+        if((props.rounds === 0 || props.rounds % 2 === 0 && playground.playgroundArray[x][y] === '-')) {
             playground.playgroundArray[x][y] = 'X'
             emits('runs-increment')
-        } else if((props.rounds % 2 != 0 && playground.playgroundArray[x][y] === '')) {
+        } else if((props.rounds % 2 != 0 && playground.playgroundArray[x][y] === '-')) {
             playground.playgroundArray[x][y] = 'O'
             emits('runs-increment')
         }
@@ -96,6 +101,7 @@
         justify-content: center;
         border: solid 1px #4d72cd;
         box-shadow: 4px 4px 5px rgba(0, 0, 0, .3);
+        /* background-image: repeating-linear-gradient(45deg, transparent 0%, transparent 48%, black 50%, transparent 52%, transparent 100%); */
     }
 
     .field-column:hover {
@@ -111,5 +117,9 @@
     .cello {
         cursor: default;
         color: blue;
+    }
+
+    .aaa {
+        background-color: purple;
     }
 </style>

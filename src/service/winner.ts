@@ -1,5 +1,7 @@
+import { stringMatrix, numberMatrix } from '../types/types'
+
 export default class Winner {
-    public static fromTopRightDiagonal = function(twoDimensArray: Array<Array<string>>, line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): Array<Array<number>> {
+    public static fromTopRightDiagonal = function(twoDimensArray: stringMatrix, line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): numberMatrix {
         let x = 0
         let y = 0
         let tempArray: string[] = []
@@ -21,7 +23,7 @@ export default class Winner {
         return tempCoor
     }
     
-    public static fromTopLeftDiagonal = function(twoDimensArray: Array<Array<string>>,  line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): Array<Array<number>> {
+    public static fromTopLeftDiagonal = function(twoDimensArray: stringMatrix,  line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): numberMatrix {
         let x = 0
         let y = 0
         let tempArray: string[] = []
@@ -44,7 +46,7 @@ export default class Winner {
     }
     
     // This function does not do what I want!!!!!!!!!!!!
-    public static column = function(twoDimensArray: Array<Array<string>>,  line: number, rowToWinX: string, rowToWinO: string, rowToWin: number): Array<Array<number>> {
+    public static column = function(twoDimensArray: stringMatrix,  line: number, rowToWinX: string, rowToWinO: string, rowToWin: number): numberMatrix {
         let x = 0
         let y = 0
         let tempArray: string[] = []
@@ -67,7 +69,7 @@ export default class Winner {
         } else return [[]]
     }
     
-    public static row = function(twoDimensArray: Array<Array<string>>,  line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): Array<Array<number>> {
+    public static row = function(twoDimensArray: stringMatrix,  line: number ,rowToWinX: string, rowToWinO: string, rowToWin: number): numberMatrix {
         let x = 0
         let y = 0
         let tempArray: string[] = []
@@ -90,7 +92,7 @@ export default class Winner {
         } else return [[]]
     }
     
-    public static checkWinner = function(twoDimensArray: Array<Array<string>>, winRow: Array<Array<number>>, rowToWin: number, rowToWinX: string, rowToWinO: string): Array<number[]> {
+    public static checkWinner = function(twoDimensArray: stringMatrix, winRow: numberMatrix, rowToWin: number, rowToWinX: string, rowToWinO: string): Array<number[]> {
     // create row of symbols from row of indexes of 2D array
         let winRowSymbol: string[] = []
         let winRowIndex: Array<number[]> = []
@@ -119,5 +121,32 @@ export default class Winner {
         }
     
         return winRowIndex
+    }
+
+    public static winCoordinates = function(winCoordinatesPlus: numberMatrix, y: number, x: number, rowToWin: number): boolean {
+        let coordinatesArray: string[] = []
+        for(let i = 0; i <= rowToWin - 1; i++){
+            // console.log(winCoordinatesPlus)
+            const aaa = winCoordinatesPlus[i].join(',')
+            coordinatesArray.push(aaa)
+        }
+        const q = y.toString()
+        const w = x.toString()
+        const e = `${y},${x}`
+        // console.log(coordinatesArray)
+
+        coordinatesArray.includes(e) ? true : false
+        return coordinatesArray.includes(e) ? true : false
+    }
+
+    public static draw = function(twoDimensArray: stringMatrix, roundPlayed: number, playgroundSize: number) :stringMatrix {
+        let fullPlayground: stringMatrix = []
+        if(roundPlayed >= Math.pow(playgroundSize, 2) * 0.8) {
+            for(let i = 0; i <= twoDimensArray.length -1; i++) {
+                console.log(roundPlayed)
+                const line = twoDimensArray[i].map(cell => cell.replace('-', roundPlayed % 2 === 0 ? 'O' : 'X'))
+                fullPlayground.push(line)
+            }
+        } return fullPlayground
     }
 }
