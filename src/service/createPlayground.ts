@@ -1,10 +1,13 @@
-import {reactive} from 'vue'
+import {reactive, ref} from 'vue'
+import {numberMatrix} from '../types/types'
 
 export const size = reactive({number: 3})
 
 export const rowToWin = reactive({number: 3})
 
 export const newGame = reactive({number: -1})
+
+export const winner = ref<numberMatrix>([])
 
 // try to set playground reactive and then use it in each component and App.vue. Remove ref playground from Playground.vue and replace it by reactive playground 
 export const playground = reactive({playgroundArray: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]})

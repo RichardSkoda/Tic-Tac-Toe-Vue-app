@@ -76,7 +76,7 @@
   import Settings from './components/Settings.vue'
   import Reset from './components/Reset.vue'
   import Winner from '../src/service/winner'
-  import {size, rowToWin, playground, newGame} from '../src/service/createPlayground'
+  import {size, rowToWin, playground, newGame, winner} from '../src/service/createPlayground'
   import { numberMatrix } from '../src/types/types'
 
   const playerOneName = ref<string>('X')
@@ -84,11 +84,12 @@
   const roundsPlayed = ref<number>(0)
   const winnerXRow = ref<string>('XXX')
   const winnerORow = ref<string>('OOO')
-  const winner = ref<numberMatrix>([])
+  // const winner = ref<numberMatrix>([])
   const column = ref<numberMatrix>()
   const row = ref<numberMatrix>()
   const fromTopRightDiagonal = ref<numberMatrix>()
   const fromTopLeftDiagonal = ref<numberMatrix>()
+  
 
   const changeNameOne = (playerOneNameRecieved: string) => {
     playerOneName.value = playerOneNameRecieved

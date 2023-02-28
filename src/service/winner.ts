@@ -125,18 +125,19 @@ export default class Winner {
 
     public static winCoordinates = function(winCoordinatesPlus: numberMatrix, y: number, x: number, rowToWin: number): boolean {
         let coordinatesArray: string[] = []
-        for(let i = 0; i <= rowToWin - 1; i++){
-            // console.log(winCoordinatesPlus)
-            const aaa = winCoordinatesPlus[i].join(',')
-            coordinatesArray.push(aaa)
-        }
-        const q = y.toString()
-        const w = x.toString()
-        const e = `${y},${x}`
-        // console.log(coordinatesArray)
+        if(winCoordinatesPlus.length > rowToWin) {
+            for(let i = 0; i <= rowToWin - 1; i++){
+                const coordinateString = winCoordinatesPlus[i].join(',')
+                coordinatesArray.push(coordinateString)
+            }
 
-        coordinatesArray.includes(e) ? true : false
-        return coordinatesArray.includes(e) ? true : false
+            const coordinateString = `${x},${y}`
+            console.log(coordinatesArray)
+            console.log(coordinateString)
+    
+            return coordinatesArray.includes(coordinateString) ? true : false
+        } else return false
+
     }
 
     public static draw = function(twoDimensArray: stringMatrix, roundPlayed: number, playgroundSize: number) :stringMatrix {

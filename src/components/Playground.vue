@@ -12,7 +12,7 @@
                 :class="{
                     cellx: cell === 'X',
                     cello: cell === 'O',
-                    // aaa: Winner.winCoordinates([[0, 0], [0,1], [0,2], [0]], y, x, rowToWin.number)
+                    aaa: Winner.winCoordinates(winner, y, x, rowToWin.number)   // tadz je neco spatne. kdzy tam nedam. NAPAD/ pridat podminku v winner.ts line 130, if winCoordinatesPlus.length >=3 provest kod, jinak vratit [0]
                 }"
                 :style="{
                     'width': cellSize,
@@ -32,8 +32,7 @@
 
 <script setup lang="ts">
     import {ref, watch} from 'vue'
-    import {size, playground, createPlayground, rowToWin} from '../service/createPlayground'
-    import { numberMatrix } from '../types/types'
+    import {size, playground, createPlayground, rowToWin, winner} from '../service/createPlayground'
     import Winner from '../service/winner'
 
     const cellSize = ref<string>('75px')
@@ -41,13 +40,11 @@
     const cellRadius = ref<string>('7%')
 
     interface Props {
-        rounds: number,
-        winnerCoorArray: numberMatrix
+        rounds: number
     }
 
     const props = withDefaults(defineProps<Props>(), {
-        rounds: 0,
-        winnerCoorArray: [[0, 99]]
+        rounds: 0
     })
 
     const emits = defineEmits<{
