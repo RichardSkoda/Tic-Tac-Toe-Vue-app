@@ -18,7 +18,7 @@
       </div>
 
     <div class="playground"
-      :class="{gameover: newGame.number != -1}"
+      
     >
       <Playground
         :rounds="roundsPlayed"
@@ -84,7 +84,6 @@
   const roundsPlayed = ref<number>(0)
   const winnerXRow = ref<string>('XXX')
   const winnerORow = ref<string>('OOO')
-  // const winner = ref<numberMatrix>([])
   const column = ref<numberMatrix>()
   const row = ref<numberMatrix>()
   const fromTopRightDiagonal = ref<numberMatrix>()
@@ -141,9 +140,30 @@
       winner.value = Winner.checkWinner(playground.playgroundArray, fromTopRightDiagonal.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       newGame.number = (winner.value[winner.value.length - 1])[0]
     }
-
-    console.log(Winner.draw(playground.playgroundArray, roundsPlayed.value, size.number))
   })
+
+    // checking for draw
+  // watch(() => roundsPlayed.value, () => {
+  //   if(roundsPlayed.value >= Math.pow(size.number, 2) * 0.8) {
+  //     const fullPlayground = (Winner.draw(playground.playgroundArray, roundsPlayed.value, size.number))
+  //     console.log(fullPlayground)
+
+  //     column.value = Winner.column(fullPlayground, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+  //     row.value = Winner.row(fullPlayground, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+  //     fromTopRightDiagonal.value = Winner.fromTopRightDiagonal(fullPlayground, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+  //     fromTopLeftDiagonal.value = Winner.fromTopLeftDiagonal(fullPlayground, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
+
+  //     console.log(column.value.length)
+  //     console.log(column.value)
+  //     console.log(row.value.length)
+  //     console.log(row.value)
+  //     console.log(fromTopRightDiagonal.value.length)
+  //     console.log(fromTopRightDiagonal.value)
+  //     console.log(fromTopLeftDiagonal.value.length)
+  //     console.log(fromTopLeftDiagonal.value)
+  //   }
+
+  // })
 
 </script>
 
@@ -166,6 +186,7 @@ p {
     top: 5%;
     right: 6%;
     color:  #1d1b20 ;
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, .7);
   }
 
   .selection-position {

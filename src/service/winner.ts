@@ -132,19 +132,18 @@ export default class Winner {
             }
 
             const coordinateString = `${x},${y}`
-            console.log(coordinatesArray)
-            console.log(coordinateString)
     
             return coordinatesArray.includes(coordinateString) ? true : false
         } else return false
 
     }
 
+        // musim vratit vypllnene herni pole pro X i O a checkovat je najednou. Jinak hrozi, ze u posledniho volneho pole nebude remiza, ale muze vyhrat jen hrac, ktery uz nema dalsi tah
+        // nebo spis udelat podminku pri vzhodnoceni v App.vue. Pokud 
     public static draw = function(twoDimensArray: stringMatrix, roundPlayed: number, playgroundSize: number) :stringMatrix {
         let fullPlayground: stringMatrix = []
         if(roundPlayed >= Math.pow(playgroundSize, 2) * 0.8) {
             for(let i = 0; i <= twoDimensArray.length -1; i++) {
-                console.log(roundPlayed)
                 const line = twoDimensArray[i].map(cell => cell.replace('-', roundPlayed % 2 === 0 ? 'O' : 'X'))
                 fullPlayground.push(line)
             }

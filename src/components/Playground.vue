@@ -12,7 +12,8 @@
                 :class="{
                     cellx: cell === 'X',
                     cello: cell === 'O',
-                    aaa: Winner.winCoordinates(winner, y, x, rowToWin.number)   // tadz je neco spatne. kdzy tam nedam. NAPAD/ pridat podminku v winner.ts line 130, if winCoordinatesPlus.length >=3 provest kod, jinak vratit [0]
+                    gameover: newGame.number != -1,
+                    winnerCell: Winner.winCoordinates(winner, y, x, rowToWin.number)
                 }"
                 :style="{
                     'width': cellSize,
@@ -31,8 +32,8 @@
 </template>
 
 <script setup lang="ts">
-    import {ref, watch} from 'vue'
-    import {size, playground, createPlayground, rowToWin, winner} from '../service/createPlayground'
+    import {ref, watch, withDefaults} from 'vue'
+    import {size, playground, createPlayground, rowToWin, winner, newGame} from '../service/createPlayground'
     import Winner from '../service/winner'
 
     const cellSize = ref<string>('75px')
@@ -62,6 +63,7 @@
     }
 
     watch(() => size.number, () => {
+        console.log(size.number)
         if(size.number <= 3 && size.number <= 10) {
             cellSize.value = '75px'
             symbolSize.value = '300%'
@@ -98,25 +100,32 @@
         justify-content: center;
         border: solid 1px #4d72cd;
         box-shadow: 4px 4px 5px rgba(0, 0, 0, .3);
-        /* background-image: repeating-linear-gradient(45deg, transparent 0%, transparent 48%, black 50%, transparent 52%, transparent 100%); */
     }
 
-    .field-column:hover {
+    .field-column:not(.cello, .cellx):hover {
         background-color: rgba(77, 114, 205, 0.5);
     }
 
     .cellx {
         cursor: default;
-        font-size: 300%;
-        color: red
+        color: #9c0b1d;
     }
 
     .cello {
         cursor: default;
-        color: blue;
+        color:  #0b7e9c ;
     }
 
-    .aaa {
-        background-color: purple;
+    .gameover {
+        pointer-events: none;
+        opacity: 0.3;
+  }
+
+  .winnerCell {
+        /* background-color: #2a472f; */
+        border: solid 3px  #ae8507;
+        opacity: 1;
+        box-shadow: 6px 6px 4px rgba(0, 0, 0, .6);
+        margin: 2px 2px;
     }
 </style>
