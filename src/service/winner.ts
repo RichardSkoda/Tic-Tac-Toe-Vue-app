@@ -135,8 +135,10 @@ export default class Winner {
     
             return coordinatesArray.includes(coordinateString) ? true : false
         } else return false
-
     }
+
+
+    // s touto kontrolu remizy by byla aplikace moc pomala, udelano jednoduseji pri plnem poli
 
         // musim vratit vypllnene herni pole pro X i O a checkovat je najednou. Jinak hrozi, ze u posledniho volneho pole nebude remiza, ale muze vyhrat jen hrac, ktery uz nema dalsi tah
         // nebo spis udelat podminku pri vzhodnoceni v App.vue. Pokud 
