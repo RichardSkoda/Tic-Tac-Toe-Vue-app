@@ -24,10 +24,3 @@ export const createPlayground = function(lineAndRow: number) {
     }
     return playground
 }
-
-// blbe- nepotrebuju vztahovat z 2D pole, ale primo div element z flexboxu podle klice (koordinatu)
-export const displayWinsRow = function(twoDimensArray: Array<Array<string>>, row: Array<Array<number>>) {
-    for(let i = 0; i <= row.length - 3; i++) {
-        (twoDimensArray[(row[i])[0]][(row[i])[1]])
-    }
-}

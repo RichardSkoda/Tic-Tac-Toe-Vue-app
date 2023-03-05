@@ -34,16 +34,26 @@
         :class="{
           playerTurnContainerEmpty: roundsPlayed % 2 != 0 && winner.length > 1,
           playerTurnContainer: (roundsPlayed === 0 || roundsPlayed % 2 === 0 && winner.length < 1)}"
+          v-if="draw === false"
           >
         <div
           class="player-turn"
-          v-show="(roundsPlayed === 0 || roundsPlayed % 2 === 0) && winner.length < 1">
+          v-show="(roundsPlayed === 0 || roundsPlayed % 2 === 0) && winner.length < 1"
+          >
           {{ playerOneName }}'s turn
         </div>
       </div>
-      <div v-show="newGame.number === 0">
+      <div
+        v-show="newGame.number === 0"
+        v-if="draw === false && winner.length > 1"
+        >
         <p>{{ playerOneName }}'s</p>
         <p>WINNER</p>
+      </div>
+      <div
+        v-if="draw === true && winner.length < 1"
+        >
+        <p>DRAW</p>
       </div>
     </div>
 
@@ -54,16 +64,26 @@
         :class="{
           playerTurnContainerEmpty: (roundsPlayed === 0 || roundsPlayed % 2 === 0) && winner.length > 1,
           playerTurnContainer: roundsPlayed % 2 != 0 && winner.length < 1}"
+          v-if="draw === false"
           >
         <div 
           class="player-turn"
-          v-show="roundsPlayed % 2 != 0 && winner.length < 1">
+          v-show="roundsPlayed % 2 != 0 && winner.length < 1"
+          >
           {{ playerTwoName }}'s turn
         </div>
       </div>
-      <div v-show="newGame.number === 1">
+      <div
+        v-show="newGame.number === 1"
+        v-if="draw === false && winner.length > 1"
+        >
         <p>{{ playerTwoName }}'s</p>
         <p>WINNER</p>
+      </div>
+      <div
+        v-if="draw === true && winner.length < 1"
+        >
+        <p>DRAW</p>
       </div>
     </div>
   </div>
@@ -88,6 +108,7 @@
   const row = ref<numberMatrix>()
   const fromTopRightDiagonal = ref<numberMatrix>()
   const fromTopLeftDiagonal = ref<numberMatrix>()
+  const draw = ref<boolean>(false)
   
 
   const changeNameOne = (playerOneNameRecieved: string) => {
@@ -113,6 +134,7 @@
   const runReset = () => {
     roundsPlayed.value = 0
     winner.value = []
+    draw.value = false
   }
 
   watch(() => rowToWin.number, () => {
@@ -140,30 +162,12 @@
       winner.value = Winner.checkWinner(playground.playgroundArray, fromTopRightDiagonal.value, rowToWin.number, winnerXRow.value, winnerORow.value)
       newGame.number = (winner.value[winner.value.length - 1])[0]
     }
+
+    // draw when whole field is full
+    if(roundsPlayed.value === Math.pow(size.number, 2) && winner.value.length < 1) {
+      draw.value = true
+    }
   })
-
-    // checking for draw
-  // watch(() => roundsPlayed.value, () => {
-  //   if(roundsPlayed.value >= Math.pow(size.number, 2) * 0.8) {
-  //     const fullPlayground = (Winner.draw(playground.playgroundArray, roundsPlayed.value, size.number))
-  //     console.log(fullPlayground)
-
-  //     column.value = Winner.column(fullPlayground, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
-  //     row.value = Winner.row(fullPlayground, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
-  //     fromTopRightDiagonal.value = Winner.fromTopRightDiagonal(fullPlayground, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
-  //     fromTopLeftDiagonal.value = Winner.fromTopLeftDiagonal(fullPlayground, size.number, winnerXRow.value, winnerORow.value, rowToWin.number)
-
-  //     console.log(column.value.length)
-  //     console.log(column.value)
-  //     console.log(row.value.length)
-  //     console.log(row.value)
-  //     console.log(fromTopRightDiagonal.value.length)
-  //     console.log(fromTopRightDiagonal.value)
-  //     console.log(fromTopLeftDiagonal.value.length)
-  //     console.log(fromTopLeftDiagonal.value)
-  //   }
-
-  // })
 
 </script>
 
