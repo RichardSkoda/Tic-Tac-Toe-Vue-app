@@ -25,3 +25,6 @@ dist-ssr
 
 #Electron-builder output
 /dist_electron
+
+#Electron released apps
+/release
