@@ -5,6 +5,8 @@ import {
     screen
 } from 'electron';
 
+const path = require('path')    // Set the app icon (but it is not working from some reason)
+
 const isDev = process.env.npm_lifecycle_event === "app:dev" ? true : false;
 
 
@@ -12,6 +14,7 @@ function createWindow() {
     const {width, height} = screen.getPrimaryDisplay().workAreaSize
     // Create the browser window.
     const mainWindow = new BrowserWindow({
+        icon: path.join(__dirname, "../src/images/piskvorky_icon.ico"), // Set the app icon (but it is not working from some reason)
         width: width,
         height: height,
         webPreferences: {
